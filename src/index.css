@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 38 100% 98%;
+    --foreground: 0 0% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 18%;
+
+    --primary: 25 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 30 100% 90%;
+    --secondary-foreground: 0 0% 18%;
+
+    --muted: 30 20% 94%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 30 100% 90%;
+    --accent-foreground: 0 0% 18%;
+
+    --destructive: 6 78% 57%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 145 63% 49%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 30 20% 90%;
+    --input: 30 20% 90%;
+    --ring: 25 100% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+
+  /* ===== Logo Animation System ===== */
+  @keyframes logo-entry {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes logo-breathing {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+
+  .logo-animated {
+    will-change: transform, opacity;
+    transform-origin: center;
+    backface-visibility: hidden;
+    animation:
+      logo-entry 550ms cubic-bezier(0.22, 1, 0.36, 1) both,
+      logo-breathing 4.5s ease-in-out 700ms infinite;
+    transition:
+      transform 250ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 250ms ease-out;
+  }
+
+  .logo-animated:hover {
+    transform: scale(1.05) rotate(2deg);
+    filter: drop-shadow(0 12px 24px hsl(var(--primary) / 0.35));
+    animation-play-state: paused, paused;
+  }
+
+  /* Mobile: gentler hover */
+  @media (max-width: 640px) {
+    .logo-animated:hover {
+      transform: scale(1.03) rotate(1.5deg);
+    }
+  }
+
+  /* Accessibility: respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-animated {
+      animation: none;
+      transition: none;
+    }
+    .logo-animated:hover {
+      transform: none;
+      filter: none;
+    }
+  }
+}
